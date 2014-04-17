@@ -11,7 +11,9 @@ var Hangman = {
     this.gameShownAnswer = this.blanksFromAnswer( this.gameAnswer );
     this.hangmanState = 0;
     this.drawWord( this.gameShownAnswer );
-    debugger;
+    
+    // Default sequence of drawing the hangman
+    this.drawSequence = [ this.drawHead, this.drawTorso, this.drawLeftArm, this.drawRightArm, this.drawLeftLeg, this.drawRightLeg ];
   },
 
   // reset the game
@@ -72,9 +74,6 @@ var Hangman = {
     return shown;
   },
 
-  // Default sequence of drawing the hangman
-  drawSequence: [ this.drawHead, this.drawTorso, this.drawLeftArm, this.drawRightArm, this.drawLeftLeg, this.drawRightLeg ],
-
   // Updates the field with the wrong letter typed in
   wrongLetter: function( letter ) {
     $('#wrong-letters').append(
@@ -106,7 +105,6 @@ var Hangman = {
   */
   keypress: function(elm) {
     if (!elm) return;
-    debugger;
     var tempChar = $(elm).val().toLowerCase(),
         tempString = "";
     $(elm).val("");
@@ -163,10 +161,10 @@ var Hangman = {
 
 }
 
+// Listening the field for every input
+$('#letter-input').keyup( function() { Hangman.keypress(this); } );
 
-// Start the whole thing
-
+// Dom ready? Start the game.
 $(function() {
   Hangman.setup();
-  $('#letter-input').keyup( Hangman.keypress(this) );
 });
