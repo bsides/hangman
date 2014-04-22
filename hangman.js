@@ -1,9 +1,9 @@
 var Hangman = {
-  i18n: { 
+  i18n: {
     win:  "Parabéns, você venceu",
     lose: "Você perdeu :("
   },
-  
+
   // setup the game
   setup: function() {
     this.startOver();
@@ -11,28 +11,28 @@ var Hangman = {
     this.gameShownAnswer = this.blanksFromAnswer( this.gameAnswer );
     this.hangmanState = 0;
     this.drawWord( this.gameShownAnswer );
-    
+
     // Default sequence of drawing the hangman
     this.drawSequence = [ this.drawHead, this.drawTorso, this.drawLeftArm, this.drawRightArm, this.drawLeftLeg, this.drawRightLeg ];
   },
 
   // reset the game
   startOver: function() {
-  	$('.body-part').remove();
+    $('.body-part').remove();
     $('.guessed-letter').remove();
     $('.shown-letter').remove();
   },
 
   // happens when the user wins the game
   win: function() {
-  	alert( this.i18n.win );
-  	this.startOver();
+    alert( this.i18n.win );
+    this.startOver();
   },
 
   // happens once the man is totally hung
   lose: function() {
-  	alert( this.i18n.lose );
-  	this.startOver();
+    alert( this.i18n.lose );
+    this.startOver();
   },
 
   // User inputted words, developed in the future
@@ -50,8 +50,8 @@ var Hangman = {
     return w[ Math.floor( Math.random() * w.length ) ];
   },
 
-  blanksFromAnswer: function( answerWord ) {  
-    var result = ""; 
+  blanksFromAnswer: function( answerWord ) {
+    var result = "";
     for ( i in answerWord ) {
       result = "_" + result;
     }
@@ -87,7 +87,7 @@ var Hangman = {
       if ( answer.charAt(i) != '_' ) {
         // if the right letter was typed, insert it in the right place
         $k.text( answer.charAt(i) );
-      } else { 
+      } else {
         // if the wrong letter was typed, just leave the place blank
         $k.html('&nbsp;');
       }
@@ -96,7 +96,7 @@ var Hangman = {
     }
   },
 
-  /* 
+  /*
   / In each keypress, we check:
   /   1. If the letter exists in the word
   /   2. If the letter was already guessed
@@ -150,13 +150,13 @@ var Hangman = {
     $('.armbox').prepend( $('<div/>').addClass("body-part leftarm") );
   },
   drawRightArm: function() {
-    $('.armbox').prepend( $('<div/>').addClass("body-part rightarm") );   
+    $('.armbox').prepend( $('<div/>').addClass("body-part rightarm") );
   },
   drawLeftLeg: function() {
-    $('.legbox').prepend( $('<div/>').addClass("body-part leftleg") );   
+    $('.legbox').prepend( $('<div/>').addClass("body-part leftleg") );
   },
   drawRightLeg: function() {
-    $('.legbox').prepend( $('<div/>').addClass("body-part rightleg") );   
+    $('.legbox').prepend( $('<div/>').addClass("body-part rightleg") );
   },
 
 }

@@ -1,11 +1,13 @@
-body { 
-    font-family:sans-serif; 
-    font-weight:bold; 
+body {
+    font-family:sans-serif;
+    font-weight:bold;
     font-size:16pt;
 }
 /* Topmatter */
 .topmatter {
-    height:210px;    
+    height:210px;
+    width: 800px;
+    margin: 0 auto;
 }
 .bottommatter{
     background:#f1f1f1;
@@ -66,7 +68,7 @@ body {
 /* Hangman Area */
 .hang-container {
     margin-top:-10px;
-    margin-right: 90px; 
+    margin-right: 90px;
     width:200px;
     height:205px;
     float:right;
