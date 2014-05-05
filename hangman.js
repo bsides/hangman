@@ -1,88 +1,95 @@
-var Hangman = {
-  i18n: {
-    win:  "Parabéns, você venceu",
-    lose: "Você perdeu :("
-  },
+var Hangman = (function() {
+
+  'use strict';
+
+  var
+    gameAnswer, gameShownAnswer, hangmanState,
+    i18n = {
+      win:  "Parabéns, você venceu",
+      lose: "Você perdeu :("
+    };
+  // end variable declarations
 
   // setup the game
-  setup: function() {
-    this.startOver();
-    this.gameAnswer = this.chooseWord();
-    this.gameShownAnswer = this.blanksFromAnswer( this.gameAnswer );
-    this.hangmanState = 0;
-    this.drawWord( this.gameShownAnswer );
+  function setup() {
+    startOver();
+    gameAnswer = chooseWord();
+    gameShownAnswer = blanksFromAnswer( gameAnswer );
+    hangmanState = 0;
+    drawWord( gameShownAnswer );
 
     // Default sequence of drawing the hangman
-    this.drawSequence = [ this.drawHead, this.drawTorso, this.drawLeftArm, this.drawRightArm, this.drawLeftLeg, this.drawRightLeg ];
-  },
+    drawSequence = [ drawHead, drawTorso, drawLeftArm, drawRightArm, drawLeftLeg, drawRightLeg ];
+  }
 
   // reset the game
-  startOver: function() {
+  function startOver() {
     $('.body-part').remove();
     $('.guessed-letter').remove();
     $('.shown-letter').remove();
-  },
+  }
 
   // happens when the user wins the game
-  win: function() {
-    alert( this.i18n.win );
-    this.startOver();
-  },
+  function win() {
+    alert( i18n.win );
+    startOver();
+  }
 
   // happens once the man is totally hung
-  lose: function() {
-    alert( this.i18n.lose );
-    this.startOver();
-  },
+  function lose() {
+    alert( i18n.lose );
+    startOver();
+  }
 
   // User inputted words, developed in the future
-  inputWords: function() {
+  function inputWords() {
     return false;
-  },
+  }
 
   // Default words in case no input was given
-  words: function() {
-    return ['gato', 'cachorro', 'sapo', 'elefante', 'girafa', 'pinguim'] || this.inputWords;
-  },
+  function words() {
+    return ['gato', 'cachorro', 'sapo', 'elefante', 'girafa', 'pinguim'] || inputWords;
+  }
 
-  chooseWord: function() {
-    var w = this.words();
+  function chooseWord() {
+    var w = words();
     return w[ Math.floor( Math.random() * w.length ) ];
-  },
+  }
 
-  blanksFromAnswer: function( answerWord ) {
-    var result = "";
+  function blanksFromAnswer( answerWord ) {
+    var result = "", i;
     for ( i in answerWord ) {
       result = "_" + result;
     }
     return result;
-  },
+  }
 
   // Where to alter
-  alterAt: function( n, c, originalString ) {
+  function alterAt( n, c, originalString ) {
     return originalString.substr( 0, n ) + c + originalString.substr( n + 1, originalString.length );
-  },
+  }
 
   // Guessing which word, returns shown
-  guessLetter: function( letter, shown, answer ) {
+  function guessLetter( letter, shown, answer ) {
     var checkIndex = 0;
     checkIndex = answer.indexOf(letter);
     while( checkIndex >= 0 ) {
-      shown = this.alterAt( checkIndex, letter, shown );
+      shown = alterAt( checkIndex, letter, shown );
       checkIndex = answer.indexOf(letter, checkIndex + 1);
     }
     return shown;
-  },
+  }
 
   // Updates the field with the wrong letter typed in
-  wrongLetter: function( letter ) {
+  function wrongLetter( letter ) {
     $('#wrong-letters').append(
       $('<span/>').addClass('guessed-letter').text(letter));
-  },
+  }
 
   // Update the word with the right letter that was typed in
-  updateWord: function( answer ) {
+  function updateWord( answer ) {
     $k = $('.shown-letter:first');
+    var i;
     for ( i in answer ) {
       if ( answer.charAt(i) != '_' ) {
         // if the right letter was typed, insert it in the right place
@@ -94,7 +101,7 @@ var Hangman = {
       // go to the next field of the words
       $k = $k.next();
     }
-  },
+  }
 
   /*
   / In each keypress, we check:
@@ -103,68 +110,94 @@ var Hangman = {
   /   3. If the letter is the last one in the word
   /   4. If it's the last one, check if either won or lose
   */
-  keypress: function(elm) {
+  function keypress(elm) {
     if (!elm) return;
     var tempChar = $(elm).val().toLowerCase(),
         tempString = "";
     $(elm).val("");
 
-    tempString = this.guessLetter( tempChar, this.gameShownAnswer, this.gameAnswer );
-    if ( tempString != this.gameShownAnswer ) {
-      this.updateWord( tempString );
-      this.gameShownAnswer = tempString;
-      if ( this.gameShownAnswer === this.gameAnswer ) {
-        this.win();
+    tempString = guessLetter( tempChar, gameShownAnswer, gameAnswer );
+    if ( tempString != gameShownAnswer ) {
+      updateWord( tempString );
+      gameShownAnswer = tempString;
+      if ( gameShownAnswer === gameAnswer ) {
+        win();
       }
     } else {
-      this.wrongLetter( tempChar );
-      this.drawSequence[ this.hangmanState++ ]();
-      if ( this.hangmanState === this.drawSequence.length ) {
-        this.lose();
+      wrongLetter( tempChar );
+      drawSequence[ hangmanState++ ]();
+      if ( hangmanState === drawSequence.length ) {
+        lose();
       }
     }
 
-  },
+  }
 
   // Drawing method specifically the word itself
-  drawWord: function( answer ) {
+  function drawWord( answer ) {
+    var i;
     for ( i in answer ) {
       $('.word-display').append(
         $('<span/>').addClass('shown-letter').html('&nbsp;'));
     }
-  },
+  }
 
   // Drawing hangman figure methods
-  drawHead: function() {
+  function drawHead() {
     $('.draw-area').append( $('<div/>').addClass("body-part head") );
-  },
-  drawTorso: function() {
+  }
+  function drawTorso() {
     $('.draw-area').append(
       $('<div/>').addClass("body-part armbox").append(
         $('<div/>').addClass("body-part torso")));
     $('.draw-area').append(
       $('<div/>').addClass("body-part legbox").append(
         $('<div/>').addClass("body-part pelvis")));
-  },
-  drawLeftArm: function() {
+  }
+  function drawLeftArm() {
     $('.armbox').prepend( $('<div/>').addClass("body-part leftarm") );
-  },
-  drawRightArm: function() {
+  }
+  function drawRightArm() {
     $('.armbox').prepend( $('<div/>').addClass("body-part rightarm") );
-  },
-  drawLeftLeg: function() {
+  }
+  function drawLeftLeg() {
     $('.legbox').prepend( $('<div/>').addClass("body-part leftleg") );
-  },
-  drawRightLeg: function() {
+  }
+  function drawRightLeg() {
     $('.legbox').prepend( $('<div/>').addClass("body-part rightleg") );
-  },
+  }
 
-}
+
+  // API
+
+  return {
+    setup: setup,
+    startOver: startOver,
+    win: win,
+    lose: lose,
+    inputWords: inputWords,
+    words: words,
+    chooseWord: chooseWord,
+    blanksFromAnswer: blanksFromAnswer,
+    alterAt: alterAt,
+    guessLetter: guessLetter,
+    wrongLetter: wrongLetter,
+    updateWord: updateWord,
+    keypress: keypress,
+    drawWord: drawWord,
+    drawHead: drawHead,
+    drawLeftArm: drawLeftArm,
+    drawRightArm: drawRightArm,
+    drawLeftLeg: drawLeftLeg,
+    drawRightLeg: drawRightLeg
+  }
+
+})();
 
 // Listening the field for every input
-$('#letter-input').keyup( function() { Hangman.keypress(this); } );
+// $('#letter-input').keyup( function() { Hangman.keypress(this); } );
 
-// Dom ready? Start the game.
-$(function() {
-  Hangman.setup();
-});
+// // Dom ready? Start the game.
+// $(function() {
+//   Hangman.setup();
+// });
