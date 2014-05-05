@@ -2,9 +2,11 @@ var Hangman = (function() {
 
   'use strict';
 
-  var
-    gameAnswer, gameShownAnswer, hangmanState,
-    i18n = {
+  var gameAnswer
+    , gameShownAnswer
+    , hangmanState
+    , drawSequence
+    , i18n = {
       win:  "Parabéns, você venceu",
       lose: "Você perdeu :("
     };
@@ -57,8 +59,8 @@ var Hangman = (function() {
   }
 
   function blanksFromAnswer( answerWord ) {
-    var result = "", i;
-    for ( i in answerWord ) {
+    var result = "";
+    for ( var i in answerWord ) {
       result = "_" + result;
     }
     return result;
@@ -89,8 +91,7 @@ var Hangman = (function() {
   // Update the word with the right letter that was typed in
   function updateWord( answer ) {
     $k = $('.shown-letter:first');
-    var i;
-    for ( i in answer ) {
+    for ( var i in answer ) {
       if ( answer.charAt(i) != '_' ) {
         // if the right letter was typed, insert it in the right place
         $k.text( answer.charAt(i) );
@@ -135,8 +136,7 @@ var Hangman = (function() {
 
   // Drawing method specifically the word itself
   function drawWord( answer ) {
-    var i;
-    for ( i in answer ) {
+    for ( var i in answer ) {
       $('.word-display').append(
         $('<span/>').addClass('shown-letter').html('&nbsp;'));
     }
