@@ -5,7 +5,7 @@ var Hangman = {
   },
 
   // setup the game
-  setup: function() {
+  setup: function(elm) {
     this.startOver();
     this.gameAnswer = this.chooseWord();
     this.gameShownAnswer = this.blanksFromAnswer( this.gameAnswer );
@@ -14,6 +14,13 @@ var Hangman = {
 
     // Default sequence of drawing the hangman
     this.drawSequence = [ this.drawHead, this.drawTorso, this.drawLeftArm, this.drawRightArm, this.drawLeftLeg, this.drawRightLeg ];
+
+    // Start listening to the keypresses
+    if (!elm) return;
+    var that = this;
+    $(elm).keyup( function() {
+      that.keypress($(elm));
+    });
   },
 
   // reset the game
@@ -26,13 +33,13 @@ var Hangman = {
   // happens when the user wins the game
   win: function() {
     alert( this.i18n.win );
-    this.startOver();
+    this.setup();
   },
 
   // happens once the man is totally hung
   lose: function() {
     alert( this.i18n.lose );
-    this.startOver();
+    this.setup();
   },
 
   // User inputted words, developed in the future
@@ -82,8 +89,8 @@ var Hangman = {
 
   // Update the word with the right letter that was typed in
   updateWord: function( answer ) {
-    $k = $('.shown-letter:first');
-    for ( i in answer ) {
+    $k = $('.shown-letter').first();
+    for ( var i in answer ) {
       if ( answer.charAt(i) != '_' ) {
         // if the right letter was typed, insert it in the right place
         $k.text( answer.charAt(i) );
@@ -162,9 +169,9 @@ var Hangman = {
 }
 
 // Listening the field for every input
-$('#letter-input').keyup( function() { Hangman.keypress(this); } );
+
 
 // Dom ready? Start the game.
 $(function() {
-  Hangman.setup();
+  Hangman.setup("#letter-input");
 });
