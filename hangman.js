@@ -18,7 +18,7 @@ var Hangman = {
     // Start listening to the keypresses
     if (!elm) return;
     var that = this;
-    $(elm).keyup( function() {
+    $(elm).on('keyup', function() {
       that.keypress($(elm));
     });
   },
@@ -66,12 +66,13 @@ var Hangman = {
   },
 
   // Where to alter
-  alterAt: function( n, c, originalString ) {
-    return originalString.substr( 0, n ) + c + originalString.substr( n + 1, originalString.length );
+  alterAt: function( index, letter, originalString ) {
+    return originalString.substr( 0, index ) + letter + originalString.substr( index + 1, originalString.length );
   },
 
   // Guessing which word, returns shown
   guessLetter: function( letter, shown, answer ) {
+    if (!letter) return; // failsafe to not lock the browser... stupid loops
     var checkIndex = 0;
     checkIndex = answer.indexOf(letter);
     while( checkIndex >= 0 ) {
@@ -111,9 +112,11 @@ var Hangman = {
   /   4. If it's the last one, check if either won or lose
   */
   keypress: function(elm) {
-    if (!elm) return;
-    var tempChar = $(elm).val().toLowerCase(),
-        tempString = "";
+    // if nothing is pressed, please don't fuck the app
+    if (!elm || !elm.val()) return;
+    // now keep going
+    var tempChar = $(elm).val().toLowerCase()
+      , tempString = "";
     $(elm).val("");
 
     tempString = this.guessLetter( tempChar, this.gameShownAnswer, this.gameAnswer );
