@@ -11,8 +11,10 @@ You know the drill. No? Okay. Here it goes:
 git clone git@github.com:bsides/hangman.git
 cd hangman
 npm install
+bower install
 grunt serve
 ```
+Of course you will need NodeJS, Grunt and Bower installed.
 You can also make it production ready with ```grunt build```, of course.
 
 Have fun! :smile_cat:
