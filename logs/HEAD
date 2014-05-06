@@ -1,0 +1,10 @@
+0000000000000000000000000000000000000000 68646f2dafc91b5890de7ca1c06ca35194dc1bb4 Rafael Pereira <rafaelbsides@gmail.com> 1398168835 -0300	clone: from git@github.com:bsides/hangman.git
+68646f2dafc91b5890de7ca1c06ca35194dc1bb4 f406a38e8c9041ea3dac346927a35ff1dbcd5c9e Rafael Pereira <rafaelbsides@gmail.com> 1398170903 -0300	commit: Removed some whitespaces, included incs
+f406a38e8c9041ea3dac346927a35ff1dbcd5c9e 4546650454dc26b0addcdc3ac8fea5cade5c8b7e Rafael Pereira <rafaelbsides@gmail.com> 1398176261 -0300	commit (amend): Removed some whitespaces, included incs
+4546650454dc26b0addcdc3ac8fea5cade5c8b7e 233dcb3a8d071b16ac31c3978d27ea89a70d9b97 Rafael Pereira <rafaelbsides@gmail.com> 1399333299 -0300	checkout: moving from master to refactor
+233dcb3a8d071b16ac31c3978d27ea89a70d9b97 5f8a0f1fc074290e99e0f71e54ae584eb76af1ff Rafael Pereira <rafaelbsides@gmail.com> 1399333808 -0300	commit: Better design pattern
+5f8a0f1fc074290e99e0f71e54ae584eb76af1ff 4546650454dc26b0addcdc3ac8fea5cade5c8b7e Rafael Pereira <rafaelbsides@gmail.com> 1399333906 -0300	checkout: moving from refactor to master
+4546650454dc26b0addcdc3ac8fea5cade5c8b7e 424f2ca89eae6d2e8833754b0c22ca93dfb158de Rafael Pereira <rafaelbsides@gmail.com> 1399337344 -0300	commit: Some coding adjustments to infinte loop madness
+424f2ca89eae6d2e8833754b0c22ca93dfb158de 5f8a0f1fc074290e99e0f71e54ae584eb76af1ff Rafael Pereira <rafaelbsides@gmail.com> 1399337361 -0300	checkout: moving from master to refactor
+5f8a0f1fc074290e99e0f71e54ae584eb76af1ff 424f2ca89eae6d2e8833754b0c22ca93dfb158de Rafael Pereira <rafaelbsides@gmail.com> 1399338010 -0300	checkout: moving from refactor to master
+424f2ca89eae6d2e8833754b0c22ca93dfb158de 1508983c6ed3af784796044551b3fe7bbe07bf68 Rafael Pereira <rafaelbsides@gmail.com> 1399339433 -0300	commit: Fixed crazy browser loops on letter undefined

@@ -1,7 +1,8 @@
 var Hangman = {
+
   i18n: {
-    win:  "Parabéns, você venceu",
-    lose: "Você perdeu :("
+    win:  'Parabéns, você venceu',
+    lose: 'Você perdeu :('
   },
 
   // setup the game
@@ -58,9 +59,9 @@ var Hangman = {
   },
 
   blanksFromAnswer: function( answerWord ) {
-    var result = "";
-    for ( i in answerWord ) {
-      result = "_" + result;
+    var result = '';
+    for ( var i in answerWord ) {
+      result = '_' + result;
     }
     return result;
   },
@@ -90,9 +91,9 @@ var Hangman = {
 
   // Update the word with the right letter that was typed in
   updateWord: function( answer ) {
-    $k = $('.shown-letter').first();
+    var $k = $('.shown-letter').first();
     for ( var i in answer ) {
-      if ( answer.charAt(i) != '_' ) {
+      if ( answer.charAt(i) !== '_' ) {
         // if the right letter was typed, insert it in the right place
         $k.text( answer.charAt(i) );
       } else {
@@ -116,11 +117,11 @@ var Hangman = {
     if (!elm || !elm.val()) return;
     // now keep going
     var tempChar = $(elm).val().toLowerCase()
-      , tempString = "";
-    $(elm).val("");
+      , tempString = '';
+    $(elm).val('');
 
     tempString = this.guessLetter( tempChar, this.gameShownAnswer, this.gameAnswer );
-    if ( tempString != this.gameShownAnswer ) {
+    if ( tempString !== this.gameShownAnswer ) {
       this.updateWord( tempString );
       this.gameShownAnswer = tempString;
       if ( this.gameShownAnswer === this.gameAnswer ) {
@@ -138,7 +139,7 @@ var Hangman = {
 
   // Drawing method specifically the word itself
   drawWord: function( answer ) {
-    for ( i in answer ) {
+    for ( var i in answer ) {
       $('.word-display').append(
         $('<span/>').addClass('shown-letter').html('&nbsp;'));
     }
@@ -146,35 +147,35 @@ var Hangman = {
 
   // Drawing hangman figure methods
   drawHead: function() {
-    $('.draw-area').append( $('<div/>').addClass("body-part head") );
+    $('.draw-area').append( $('<div/>').addClass('body-part head') );
   },
   drawTorso: function() {
     $('.draw-area').append(
-      $('<div/>').addClass("body-part armbox").append(
-        $('<div/>').addClass("body-part torso")));
+      $('<div/>').addClass('body-part armbox').append(
+        $('<div/>').addClass('body-part torso')));
     $('.draw-area').append(
-      $('<div/>').addClass("body-part legbox").append(
-        $('<div/>').addClass("body-part pelvis")));
+      $('<div/>').addClass('body-part legbox').append(
+        $('<div/>').addClass('body-part pelvis')));
   },
   drawLeftArm: function() {
-    $('.armbox').prepend( $('<div/>').addClass("body-part leftarm") );
+    $('.armbox').prepend( $('<div/>').addClass('body-part leftarm') );
   },
   drawRightArm: function() {
-    $('.armbox').prepend( $('<div/>').addClass("body-part rightarm") );
+    $('.armbox').prepend( $('<div/>').addClass('body-part rightarm') );
   },
   drawLeftLeg: function() {
-    $('.legbox').prepend( $('<div/>').addClass("body-part leftleg") );
+    $('.legbox').prepend( $('<div/>').addClass('body-part leftleg') );
   },
   drawRightLeg: function() {
-    $('.legbox').prepend( $('<div/>').addClass("body-part rightleg") );
+    $('.legbox').prepend( $('<div/>').addClass('body-part rightleg') );
   },
 
-}
+};
 
 // Listening the field for every input
 
 
 // Dom ready? Start the game.
 $(function() {
-  Hangman.setup("#letter-input");
+  Hangman.setup('#letter-input');
 });
